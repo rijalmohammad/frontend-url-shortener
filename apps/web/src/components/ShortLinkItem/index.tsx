@@ -69,7 +69,7 @@ export default function ShortLinkItem({ link }: ShortLinkItemProps) {
             
             <button
               onClick={handleCopy}
-              className="flex-shrink-0 bg-slate-100 hover:bg-slate-200 text-slate-700 p-2 rounded-lg transition-all duration-200 hover:shadow-md"
+              className="cursor-pointer flex-shrink-0 bg-slate-100 hover:bg-slate-200 text-slate-700 p-2 rounded-lg transition-all duration-200 hover:shadow-md"
               title="Copy to clipboard"
             >
               {copied ? (
