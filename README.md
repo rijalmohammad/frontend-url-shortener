@@ -1,167 +1,290 @@
-# URL Shortener Frontend Assignment (2–3 hours)
+# URL Shortener - Full Stack Application
 
-📌 **Objective**
-Build a Next.js frontend application that interfaces with a URL shortener backend service. This exercise tests component architecture, state management, API integration, server-side rendering, and user experience design.
+A modern, full-stack URL shortener application built with Next.js and Go, featuring a clean UI, QR code generation, and comprehensive testing.
 
-📦 **Requirements**
+## � Project Overview
 
-## 1. Core Functionality
-Implement a web application that allows users to:
-- Enter a long URL and generate a shortened version
-- View a list of their previously created short links
-- Copy short URLs to clipboard
-- Click short URLs to test redirection (opens in new tab)
-- Display creation timestamps for each link
+This monorepo contains a complete URL shortener solution with:
+- **Monorepo**: Turborepo for build orchestration and caching
+- **Frontend**: Next.js 16 with TypeScript, Tailwind CSS, and Lucide icons
+- **Backend**: Go with Gin framework and in-memory storage
+- **Features**: URL shortening, QR code generation, clipboard copy, link management
 
-## 2. User Interface Components
+## 🏗️ Architecture
 
-### Main URL Shortener Form
-- Input field for original URL with validation
-- Submit button to create short link
-- Loading state during API calls
-- Success/error feedback messages
-
-### Short Links List
-- Display all created short links in a clean list/table format
-- Show original URL, short URL, and creation date
-- Copy-to-clipboard functionality for each short URL
-- "Test Link" button that opens the short URL in a new tab
-
-### Navigation & Layout
-- Clean, responsive design
-- Header with application title
-- Proper spacing and typography
-
-## 3. Technical Requirements
-
-### API Integration
-The frontend should integrate with the backend URL shortener service:
-
-```typescript
-// Expected API endpoints
-POST /api/shortlinks
-GET /api/shortlinks/{id}
-GET /shortlinks/{id} (redirect endpoint)
+```
+┌─────────────────┐         ┌─────────────────┐
+│   Frontend      │         │    Backend      │
+│   (Next.js)     │ ◄─────► │    (Go/Gin)     │
+│   Port: 3000    │  HTTP   │   Port: 8080    │
+└─────────────────┘         └─────────────────┘
+        │                           │
+        ▼                           ▼
+  React Context              In-Memory Store
+  State Management           (Map-based)
 ```
 
-### State Management
-- Use React hooks (useState, useEffect) or context for state management
-- Maintain list of created short links in component state
-- Handle loading, success, and error states
+### Monorepo Structure
 
-### Validation & Error Handling
-- Validate URLs before submission (proper format)
-- Handle API errors gracefully with user-friendly messages
-- Show loading indicators during API calls
+Built with **Turborepo** for efficient task running and caching:
 
-## 💾 **Tech Stack**
-- **Framework**: Next.js 14+ with TypeScript
+```
+frontend-url-shortener/
+├── apps/
+│   ├── web/              # Next.js frontend (see apps/web/README.md)
+│   └── backend/          # Go backend (see apps/backend/README.md)
+├── package.json          # Root package.json
+├── pnpm-workspace.yaml   # PNPM workspace config
+└── turbo.json           # Turborepo pipeline configuration
+```
+
+**📖 For detailed documentation:**
+- [Frontend Documentation](./apps/web/README.md) - Component architecture, testing, API integration
+- [Backend Documentation](./apps/backend/README.md) - API endpoints, storage, deployment
+
+## 🛠️ Tech Stack
+
+### Monorepo
+- **Build System**: Turborepo
+- **Package Manager**: pnpm with workspaces
+- **Task Orchestration**: Parallel execution with caching
+
+### Frontend (`apps/web`)
+- **Framework**: Next.js 16.2.2 (App Router)
+- **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **HTTP Client**: fetch API or axios
-- **State Management**: React hooks and Next.js state management patterns
-- **Routing**: Next.js App Router or Pages Router
+- **UI Components**: Custom components with Lucide icons
+- **QR Codes**: qrcode.react
+- **Testing**: Vitest, React Testing Library
+- **State**: React Context API
 
-## ✅ **Constraints**
-- Must be responsive (desktop and mobile)
-- Use TypeScript for type safety
-- Handle edge cases (network errors, invalid URLs)
-- Assume backend runs on `http://localhost:8080`
-- No authentication required
-- Modern browser support (Chrome, Firefox, Safari)
-- Use Next.js best practices (SSR/SSG where appropriate)
+### Backend (`apps/backend`)
+- **Language**: Go 1.23+
+- **Framework**: Gin
+- **Storage**: In-memory (map-based)
+- **CORS**: Enabled for localhost:3000
+- **ID Generation**: Custom base62 encoding
 
-## 🎨 **UI/UX Requirements**
-- Clean, intuitive interface
-- Proper loading states and feedback
-- Responsive design (mobile-friendly)
+## 🚀 Setup Instructions
 
-## 🧪 **Bonus Features** (Optional, if you have time)
-- [ ] QR code generation for short URLs
+### Prerequisites
+- Node.js 18+ and pnpm
+- Go 1.23+
 
-## 📁 **Project Structure**
-```
-src/
-├── app/                    # App Router (Next.js 13+)
-│   ├── page.tsx           # Home page
-│   ├── layout.tsx         # Root layout
-│   └── globals.css        # Global styles
-├── components/
-│   ├── UrlShortenerForm/
-│   ├── ShortLinksList/
-│   ├── ShortLinkItem/
-│   └── Layout/
-├── hooks/
-│   └── useUrlShortener.ts
-├── lib/
-│   └── api.ts            # API utilities
-├── types/
-│   └── index.ts
-└── utils/
-    └── validation.ts
-```
+### Installation
 
-## 🧪 **Testing Requirements**
-- Write unit tests for key components using Jest and React Testing Library
-- Test form validation logic
-- Test API integration (with mocked responses)
-- Test copy-to-clipboard functionality
-- Test Next.js specific features (routing, SSR if implemented)
-
-## 📋 **README Requirements**
-Your README.md should include:
-
-### Setup Instructions
 ```bash
-# Example setup commands
-npx create-next-app@latest url-shortener-frontend --typescript --tailwind --eslint
-cd url-shortener-frontend
-npm run dev
+# Clone the repository
+git clone <repository-url>
+cd frontend-url-shortener
+
+# Install frontend dependencies
+pnpm install
+
+# Install backend dependencies
+cd apps/backend
+go mod tidy
+cd ../..
 ```
 
-### Environment Configuration
+## 🔧 Environment Configuration
+
+### Frontend (`apps/web/.env.local`)
 ```bash
-# .env.local example
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
 ```
 
-### Usage Examples
-- Loom video
-- Step-by-step user flow description
+### Backend
+No environment configuration required. Backend runs on port 8080 by default.
 
-### API Integration
-- Documentation of how the frontend connects to the backend
-- Example API request/response formats used
+## 💻 Usage
 
-### Testing
+### Development Mode
+
+Run both frontend and backend concurrently:
 ```bash
-# How to run tests
-npm run test
-npm run test:coverage
-npm run build  # Test production build
+# From root directory
+pnpm dev
 ```
 
-## 🔗 **Backend Integration Notes**
-
-Your frontend will connect to a URL shortener backend with these endpoints:
-
-### Create Short Link
+Or run individually:
 ```bash
-curl -X POST http://localhost:8080/api/shortlinks \
-  -H "Content-Type: application/json" \
-  -d '{"original_url": "https://example.com"}'
+# Frontend only (from root)
+pnpm -F web dev
+
+# Backend only (from root)
+pnpm -F backend dev
 ```
 
-### Get Short Link Details
+Access the application:
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8080
+
+### Production Build
+
 ```bash
-curl http://localhost:8080/api/shortlinks/abc123
+# Build frontend
+pnpm -F web build
+pnpm -F web start
+
+# Build backend
+cd apps/backend
+go build -o bin/server main.go
+./bin/server
 ```
 
-### Test Redirect
+## 🔌 API Integration
+
+### How Frontend Connects to Backend
+
+The frontend uses a centralized API client (`apps/web/src/lib/api.ts`) that:
+1. Reads `NEXT_PUBLIC_API_BASE_URL` from environment
+2. Makes HTTP requests using native `fetch` API
+3. Handles errors with custom `ApiError` class
+4. Returns typed responses based on TypeScript interfaces
+
+### API Endpoints & Request/Response Format
+
+#### 1. Create Short Link
+**Request:**
 ```bash
-curl -I http://localhost:8080/shortlinks/abc123
+POST http://localhost:8080/api/shortlinks
+Content-Type: application/json
+
+{
+  "original_url": "https://example.com/very/long/url"
+}
 ```
 
-Make sure your frontend gracefully handles backend downtime or slow responses.
+**Response:**
+```json
+{
+  "id": "mro0Dg",
+  "original_url": "https://example.com/very/long/url",
+  "short_url": "http://localhost:8080/shortlinks/mro0Dg",
+  "created_at": "2026-04-06T06:43:19Z"
+}
+```
 
----
+#### 2. Get All Short Links
+**Request:**
+```bash
+GET http://localhost:8080/api/shortlinks
+```
 
+**Response:**
+```json
+[
+  {
+    "id": "mro0Dg",
+    "original_url": "https://example.com",
+    "short_url": "http://localhost:8080/shortlinks/mro0Dg",
+    "created_at": "2026-04-06T06:43:19Z"
+  }
+]
+```
+
+#### 3. Get Short Link Details
+**Request:**
+```bash
+GET http://localhost:8080/api/shortlinks/{id}
+```
+
+**Response:**
+```json
+{
+  "id": "mro0Dg",
+  "original_url": "https://example.com",
+  "short_url": "http://localhost:8080/shortlinks/mro0Dg",
+  "created_at": "2026-04-06T06:43:19Z"
+}
+```
+
+#### 4. Redirect to Original URL
+**Request:**
+```bash
+GET http://localhost:8080/shortlinks/{id}
+```
+
+**Response:**
+```
+HTTP/1.1 301 Moved Permanently
+Location: https://example.com
+```
+
+#### 5. Health Check
+**Request:**
+```bash
+GET http://localhost:8080/health
+```
+
+**Response:**
+```json
+{
+  "status": "healthy"
+}
+```
+
+## 🧪 Testing
+
+### Run Tests
+
+```bash
+# Frontend tests (from root)
+pnpm test
+
+# Or from web directory
+cd apps/web
+pnpm test
+
+# Run with coverage
+pnpm test:coverage
+```
+
+### Test Coverage
+
+The frontend includes 58 comprehensive tests covering:
+- ✅ Component rendering and interactions
+- ✅ Form validation logic
+- ✅ API integration (mocked responses)
+- ✅ Copy-to-clipboard functionality
+- ✅ QR code generation
+- ✅ Error handling
+- ✅ Loading states
+- ✅ Timer-based UI updates
+
+### Test Files
+```
+apps/web/src/
+├── components/
+│   ├── Header/__tests__/
+│   ├── ShortLinkItem/__tests__/
+│   ├── ShortLinksList/__tests__/
+│   └── UrlShortenerForm/__tests__/
+├── hooks/__tests__/
+├── lib/__tests__/
+└── utils/__tests__/
+```
+
+## 📦 Project Structure
+
+See individual README files for detailed structure:
+- [Frontend Documentation](./apps/web/README.md)
+- [Backend Documentation](./apps/backend/README.md)
+
+## 🎯 Features
+
+- ✅ URL shortening with custom IDs
+- ✅ QR code generation for short URLs
+- ✅ Copy to clipboard functionality
+- ✅ Link management (view all links)
+- ✅ Responsive design (mobile-friendly)
+- ✅ Real-time validation
+- ✅ Error handling with user feedback
+- ✅ Loading states
+- ✅ Auto-hide success messages
+- ✅ Comprehensive test coverage
+
+## 📝 License
+
+MIT
