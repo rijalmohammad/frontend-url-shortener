@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "preinstall": "go mod tidy",
+    "dev": "go run main.go",
+    "build": "go build -o dist/server main.go",
+    "clean": "rm -rf dist",
+    "test": "go test ./...",
+    "tidy": "go mod tidy"
+  }
+}
