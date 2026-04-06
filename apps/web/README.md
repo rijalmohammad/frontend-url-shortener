@@ -71,12 +71,12 @@ cd apps/web
 pnpm install
 
 # Create environment file
-cp .env.example .env.local
+cp .env.example .env
 ```
 
 ## 🔧 Environment Configuration
 
-Create `.env.local` in the `apps/web` directory:
+Create `.env` in the `apps/web` directory:
 
 ```bash
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
@@ -228,7 +228,7 @@ apps/web/
 │   ├── lib/                # Utilities and API client
 │   ├── types/              # TypeScript type definitions
 │   └── utils/              # Helper functions
-├── .env.local              # Environment variables
+├── .env              # Environment variables
 ├── next.config.mjs         # Next.js configuration
 ├── tailwind.config.ts      # Tailwind CSS configuration
 ├── tsconfig.json           # TypeScript configuration
