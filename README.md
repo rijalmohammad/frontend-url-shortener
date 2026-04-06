@@ -122,15 +122,32 @@ Access the application:
 
 ### Production Build
 
+**Build both applications:**
 ```bash
-# Build frontend
+# Build all apps using Turborepo
+pnpm build
+```
+
+**Or build individually:**
+```bash
+# Build frontend only
 pnpm -F web build
+
+# Build backend only
+pnpm -F backend build
+# Or manually:
+cd apps/backend
+go build -o dist/server main.go
+```
+
+**Run production builds:**
+```bash
+# Frontend
 pnpm -F web start
 
-# Build backend
+# Backend
 cd apps/backend
-go build -o bin/server main.go
-./bin/server
+./dist/server
 ```
 
 ## 🔌 API Integration
