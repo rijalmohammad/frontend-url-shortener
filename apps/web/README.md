@@ -305,7 +305,3 @@ This Next.js app can be deployed to:
 - Any Node.js hosting platform
 
 Ensure `NEXT_PUBLIC_API_BASE_URL` is set in production environment variables.
-
-## 📝 License
-
-MIT

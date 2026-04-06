@@ -373,7 +373,3 @@ require (
     github.com/gin-gonic/gin v1.10.0
 )
 ```
-
-## 📝 License
-
-MIT
