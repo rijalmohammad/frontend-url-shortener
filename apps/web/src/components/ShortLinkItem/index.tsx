@@ -19,39 +19,41 @@ export default function ShortLinkItem({ link }: ShortLinkItemProps) {
       console.error('Failed to copy:', err);
     }
   };
- 
+
   const handleTest = () => {
     window.open(link.short_url, '_blank');
   };
- 
+
   const handleDownloadQR = () => {
     const svg = document.getElementById(`qr-${link.id}`);
     if (!svg) return;
- 
+
     const svgData = new XMLSerializer().serializeToString(svg);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const img = new Image();
- 
+
     img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx?.drawImage(img, 0, 0);
+      const downloadSize = 512;
+      canvas.width = downloadSize;
+      canvas.height = downloadSize;
+      
+      ctx?.drawImage(img, 0, 0, downloadSize, downloadSize);
       const pngFile = canvas.toDataURL('image/png');
- 
+
       const downloadLink = document.createElement('a');
       downloadLink.download = `qr-${link.id}.png`;
       downloadLink.href = pngFile;
       downloadLink.click();
     };
- 
+
     img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
   };
- 
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString('id-ID');
   };
- 
+
   return (
     <div className="group bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-4 hover:shadow-lg hover:shadow-slate-200/50 hover:border-cyan-200 transition-all duration-200">
       <div className="space-y-3">
