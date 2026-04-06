@@ -268,7 +268,7 @@ The frontend includes 58 comprehensive tests covering:
 - ✅ QR code generation
 - ✅ Error handling
 - ✅ Loading states
-- ✅ Timer-based UI updates
+- ✅ UI updates
 
 ### Test Files
 ```
@@ -296,12 +296,8 @@ See individual README files for detailed structure:
 - ✅ Copy to clipboard functionality
 - ✅ Link management (view all links)
 - ✅ Responsive design (mobile-friendly)
-- ✅ Real-time validation
+- ✅ URL validation
 - ✅ Error handling with user feedback
 - ✅ Loading states
 - ✅ Auto-hide success messages
 - ✅ Comprehensive test coverage
-
-## 📝 License
-
-MIT
